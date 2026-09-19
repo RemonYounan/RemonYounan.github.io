@@ -1,0 +1,190 @@
+/* ==========================================================================
+   Contact modal — opened by every "Start your project" / "Let's talk" CTA.
+   Uses the same tokens as main.css, so it themes with the rest of the site.
+   ========================================================================== */
+
+.modal[hidden] { display: none; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(14 12 10 / .55);
+  backdrop-filter: blur(3px);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  animation: cm-fade .2s var(--ease);
+}
+
+.modal__panel {
+  position: relative;
+  width: min(560px, 100%);
+  margin: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: clamp(28px, 5vw, 44px);
+  animation: cm-rise .26s var(--ease);
+}
+
+@keyframes cm-fade { from { opacity: 0; } }
+@keyframes cm-rise { from { opacity: 0; transform: translateY(14px) scale(.985); } }
+
+.modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color .18s, border-color .18s, transform .18s var(--ease);
+}
+.modal__close:hover { color: var(--ink); border-color: var(--border-strong); }
+.modal__close:active { transform: scale(.94); }
+
+.modal__panel h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.4vw, 1.95rem);
+  line-height: 1.12;
+  margin-top: 10px;
+  max-width: 15em;
+}
+
+.modal__lede {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.55;
+  max-width: 34em;
+}
+
+/* ---------- Form ---------- */
+.cm-form { margin-top: 26px; display: grid; gap: 16px; }
+
+.cm-field { display: grid; gap: 7px; }
+
+.cm-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.cm-field label span { color: var(--faint); font-weight: 400; }
+
+.cm-field input,
+.cm-field textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  padding: 13px 15px;
+  transition: border-color .18s, box-shadow .18s, background-color .18s;
+}
+.cm-field textarea { min-height: 116px; resize: vertical; line-height: 1.5; }
+
+.cm-field input::placeholder,
+.cm-field textarea::placeholder { color: var(--faint); }
+
+.cm-field input:focus,
+.cm-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--card);
+  box-shadow: 0 0 0 3px rgb(161 98 7 / .14);
+}
+
+.cm-field [aria-invalid="true"] { border-color: #C2410C; }
+.cm-field [aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(194 65 12 / .16); }
+
+.cm-error { font-size: 13px; color: #C2410C; min-height: 0; }
+.cm-error:empty { display: none; }
+
+/* Email + phone: either one will do, so they share a row and a single hint.
+   The negative margins pull hint and error tight to the pair they belong to,
+   against the form's own 16px rhythm. */
+.cm-hint { font-size: 13.5px; color: var(--faint); line-height: 1.45; }
+.cm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.cm-hint + .cm-row { margin-top: -6px; }
+.cm-row + .cm-error { margin-top: -6px; }
+
+@media (max-width: 559px) {
+  .cm-row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Actions ---------- */
+.cm-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.cm-actions .btn { flex: 1 1 190px; }
+
+.cm-wa { border-color: var(--border-strong); }
+.cm-wa:hover { border-color: #25D366; color: #128C4A; }
+.cm-wa svg { color: #25D366; }
+
+.cm-note {
+  margin-top: 18px;
+  font-size: 13.5px;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+.cm-note a { color: var(--muted); text-decoration: none; font-family: var(--font-mono); font-size: 13px; }
+.cm-note a:hover { color: var(--accent); }
+
+/* ---------- Sent state ---------- */
+.cm-done { text-align: center; padding: 12px 0 4px; }
+.cm-done__mark {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--gold-tint);
+  border: 1px solid var(--gold-edge);
+  color: var(--accent);
+}
+.cm-done h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  margin: 0;
+}
+.cm-done p { margin-top: 10px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+.cm-done .btn { margin-top: 22px; }
+
+.cm-form[data-busy="true"] { opacity: .6; pointer-events: none; }
+
+@media (max-width: 479px) {
+  .modal { padding: 0; }
+  .modal__panel { border-radius: var(--r-md) var(--r-md) 0 0; margin-top: auto; min-height: min-content; }
+  .cm-actions .btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal__backdrop,
+  .modal__panel { animation: none; }
+}

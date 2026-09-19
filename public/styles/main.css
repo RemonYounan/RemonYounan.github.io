@@ -1,0 +1,2095 @@
+/* ==========================================================================
+   Remon Younan — Flutter Product Partner
+   Design system: "Premium black + gold" (light default, dark derived)
+   Type: Bricolage Grotesque (display) · DM Sans (body) · JetBrains Mono (technical)
+   ========================================================================== */
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; }
+img { max-width: 100%; display: block; }
+button, input { font: inherit; }
+a { color: inherit; }
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
+
+/* ---------- Tokens ---------- */
+:root {
+  --font-display: "Bricolage Grotesque", "DM Sans", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --r-sm: 12px;
+  --r-md: 20px;
+  --r-lg: 28px;
+  --r-xl: 36px;
+
+  --nav-h: 76px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #FAFAF9;
+  --card: #FFFFFF;
+  --ink: #0E0C0A;
+  --muted: #57534E;
+  --faint: #726C64; /* ≥4.5:1 on --bg for small mono labels (WCAG AA) */
+  --border: #E8E6E2;
+  --border-strong: #D6D3D1;
+  --accent: #A16207;
+  --accent-ink: #FFFFFF;
+  --accent-hover: #875207;
+  --surface: #F0E9DD;
+  --tile: #EFEBE3;
+  --gold-tint: #F7EFDE;
+  --gold-edge: #E5D3AC;
+  --panel: #151110;
+  --panel-ink: #F5F3F0;
+  --panel-muted: #B5AEA5;
+  --panel-card: rgba(255, 255, 255, .05);
+  --panel-border: rgba(255, 255, 255, .10);
+  --panel-accent: #D9A83D;
+  --live: #2E9E63;
+  --phone: #241F1B;
+  /* iPhone mockup rail. Titanium ramp read as one gradient token so each theme
+     can place the body against its own ground. */
+  --device-body: linear-gradient(150deg, #6b6459 0%, #2c2825 18%, #1a1817 48%, #423c33 76%, #211f1c 100%);
+  --device-edge: #100f0e;
+  --device-rim: rgb(255 255 255 / .10);
+  --shadow-card: 0 2px 6px rgb(28 25 23 / .05), 0 18px 44px -14px rgb(28 25 23 / .16);
+  --shadow-phone: 0 28px 64px -22px rgb(28 25 23 / .38);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* Elevation ramp: perceptual steps of ~3-4 OKLCH L*, hue 78 (the gold).
+     Depth in dark mode comes from surface lightness, not shadow. */
+  --bg: #0E0C08;         /* L 15.5 - page ground */
+  --card: #1F1B16;       /* L 22.5 - raised, reads above --surface */
+  --ink: #F5F3F0;
+  --muted: #A8A29E;
+  --faint: #938E88;      /* ≥4.5:1 on --tile, the lightest surface (WCAG AA) */
+  --border: rgba(255, 255, 255, .07);
+  --border-strong: rgba(255, 255, 255, .16);
+  --accent: #D9A83D;
+  --accent-ink: #231A05;
+  --accent-hover: #E6B84F;
+  --surface: #171410;    /* L 19.5 - banded section */
+  --tile: #28251F;       /* L 26.5 - chips, hover, active nav */
+  --gold-tint: #2D1F05;
+  --gold-edge: #65470F;
+  --panel: #080605;      /* L 12.5 - ink band recedes BELOW the page ground */
+  --panel-ink: #F5F3F0;
+  --panel-muted: #A8A29E;
+  --panel-card: rgba(255, 255, 255, .05);
+  --panel-border: rgba(255, 255, 255, .11);
+  --panel-accent: #D9A83D;
+  --live: #4DBA7F;
+  --phone: #312D27;
+  --device-body: linear-gradient(150deg, #80796F 0%, #3B3731 18%, #2B2825 48%, #5B544B 76%, #33302B 100%);
+  --device-edge: #171614;
+  --device-rim: rgb(255 255 255 / .17);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / .5), 0 20px 48px -16px rgb(0 0 0 / .62);
+  --shadow-phone: 0 28px 72px -22px rgb(0 0 0 / .72);
+}
+
+/* ---------- Base ---------- */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  transition: background-color .25s, color .25s;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: top .2s;
+}
+.skip-link:focus { top: 14px; }
+
+.container { width: min(1120px, 100% - 48px); margin-inline: auto; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.08;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: var(--accent);
+  flex: none;
+}
+
+em.accent, .accent { color: var(--accent); font-style: normal; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .18s var(--ease), background-color .18s, border-color .18s, color .18s, box-shadow .18s;
+}
+.btn:active { transform: scale(.98); }
+.btn svg { transition: transform .18s var(--ease); flex: none; }
+.btn:hover svg.arrow { transform: translateX(3px); }
+
+.btn--gold { background: var(--accent); color: var(--accent-ink); }
+.btn--gold:hover { background: var(--accent-hover); }
+
+.btn--ghost { border-color: var(--border-strong); color: var(--ink); background: transparent; }
+.btn--ghost:hover { border-color: var(--ink); background: var(--card); }
+
+.btn--sm { height: 44px; padding: 0 20px; font-size: 15px; }
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--ink);
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color .18s, background-color .18s, transform .18s var(--ease);
+  padding: 0;
+}
+.icon-btn:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+
+/* ---------- Chips ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 15px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.chip__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  flex: none;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(46 158 99 / .45); }
+  55% { box-shadow: 0 0 0 7px rgb(46 158 99 / 0); }
+}
+
+.tech-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 13px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .2s, background-color .25s;
+}
+.nav.scrolled { border-bottom-color: var(--border); }
+
+.nav__inner {
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav__brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -.01em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav__brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+
+.nav__links {
+  display: flex;
+  gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+}
+.nav__links a {
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color .18s, background-color .18s;
+}
+.nav__links a:hover { color: var(--ink); }
+.nav__links a.active { color: var(--ink); background: var(--tile); }
+
+.nav__actions { display: flex; align-items: center; gap: 10px; }
+.nav__availability { display: inline-flex; }
+.nav__hamburger { display: none; }
+
+/* Mobile menu */
+.nav__menu {
+  position: absolute;
+  top: calc(var(--nav-h) + 8px);
+  left: 16px;
+  right: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-card);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+}
+.nav.open .nav__menu { opacity: 1; visibility: visible; transform: none; }
+.nav__menu a {
+  padding: 14px 18px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--ink);
+}
+.nav__menu a:hover { background: var(--tile); }
+.nav__menu .btn { margin-top: 8px; }
+
+/* ---------- Hero ---------- */
+.hero { overflow: hidden; }
+.hero__inner {
+  display: grid;
+  grid-template-columns: .92fr 1.08fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+  padding-block: clamp(48px, 8vh, 96px) clamp(56px, 9vh, 104px);
+}
+.hero__eyebrow-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hero h1 {
+  font-size: clamp(2.7rem, 6vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -.025em;
+  margin: 22px 0 20px;
+  text-wrap: balance;
+}
+.hero__sub {
+  font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 32em;
+  margin-bottom: 34px;
+}
+.hero__cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hero__note {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: .04em;
+  color: var(--faint);
+}
+.hero__note svg { color: var(--accent); }
+
+/* min-width: 0 is load-bearing — the wall's fixed-width columns give this grid
+   item a huge min-content width, which would otherwise widen the whole grid
+   (squeezed copy on desktop, horizontal page scroll on phones). */
+.hero__visual { position: relative; min-width: 0; }
+/* Gutter the wall may spill into on wide screens (container is capped at
+   1120px). 100vw counts the scrollbar, so shave 10px; .hero clips any rest. */
+@media (min-width: 1024px) {
+  .hero__visual { --wall-bleed: clamp(0px, calc((100vw - 1120px) / 2 - 10px), 400px); }
+}
+.hero__tile {
+  background: var(--tile);
+  border-radius: var(--r-xl);
+  padding: clamp(30px, 4.5vw, 52px) clamp(24px, 4vw, 48px);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  transition: background-color .25s;
+}
+
+/* Hero app wall — tilted, slow-drifting collage of shots from every app.
+   Columns alternate direction and never stop on hover; the wall can be
+   grabbed and thrown (see driveHeroWall). Focus holds it; reduced motion
+   freezes the drift but keeps the drag.
+   No tile surface, no color overlays: the collage sits straight on the
+   section background and dissolves into it on every edge via an alpha mask
+   (transparency, not a painted gradient — reads the same in light and dark).
+   Columns are fixed-width and centered, so growing the wall shows more of
+   the collage instead of scaling the shots up. */
+.hero__tile--wall {
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 0;
+  height: min(clamp(540px, 70vw, 800px), 86vh);
+  width: calc(100% + var(--wall-bleed, 0px));
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0, #000 20%, #000 80%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.app-wall {
+  position: absolute;
+  inset: -14% -8%;
+  display: flex;
+  justify-content: center;
+  gap: clamp(12px, 1.3vw, 17px);
+  transform: rotate(-4deg);
+  /* The drift is driven per frame in JS (main.js: driveHeroWall) so the wall
+     can also be dragged. Selection and the browser's native image drag would
+     both fight the grab, so both are off. `pan-y` keeps a touch swipe with the
+     page: the wall scrolls on the same axis, and trapping it would strand a
+     phone reader in the hero. */
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+/* Only a fine pointer gets the grab affordance — a touch device would show a
+   cursor nobody can see for a gesture that stays with the page. */
+.app-wall--grab { cursor: grab; }
+.app-wall--grab .app-wall__item { cursor: inherit; }
+.app-wall--grab.is-grabbing { cursor: grabbing; }
+.app-wall__col {
+  /* Fixed width: item size stays constant no matter how far the wall
+     expands; extra space reveals more columns, overflow clips + fades. */
+  flex: 0 0 clamp(168px, 13.2vw, 212px);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+/* Holds the stack and its duplicate; JS translates this, wrapping by one
+   stack height so the loop is seamless in either direction. */
+.app-wall__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+.app-wall__stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.3vw, 17px);
+  padding-bottom: clamp(12px, 1.3vw, 17px);
+}
+
+/* "Drag" nudge under the wall: hover-only, and gone for good after the first
+   drag. Lives outside .hero__tile--wall so the tile's edge mask can't fade it. */
+.app-wall__hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(4px, 1.6vw, 16px);
+  transform: translateX(-50%) translateY(6px);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.app-wall__hint svg { color: var(--accent); }
+.hero__visual:hover .app-wall__hint {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.app-wall__item {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 14px 34px -16px rgb(28 25 23 / .35);
+  transition: transform .22s var(--ease), box-shadow .22s;
+}
+.app-wall__item:hover { transform: scale(1.025); box-shadow: var(--shadow-card); }
+.app-wall__item img { width: 100%; height: auto; display: block; }
+
+.app-wall__tag {
+  position: absolute;
+  left: 9px;
+  bottom: 9px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+/* Lead card carries a social-proof line under the name (installs · rating). */
+.app-wall__tag--metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 6px 11px;
+  border-radius: 12px;
+  line-height: 1.2;
+}
+.app-wall__tag-metric {
+  color: var(--accent);
+  text-transform: none;
+  letter-spacing: .02em;
+  font-size: 10px;
+}
+
+/* ---------- Stats ---------- */
+.stats { background: var(--surface); border-block: 1px solid var(--border); transition: background-color .25s, border-color .25s; }
+.stats__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+.stat { padding: clamp(28px, 4vw, 42px) clamp(18px, 3vw, 32px); border-left: 1px solid var(--border); text-align: center; }
+.stat:first-child { border-left: 0; }
+/* Only present on stats that declare an `icon`. The glyph is gold like the
+   suffixes ("k+", the star), so a stat with no suffix still carries the accent,
+   and it is sized in `em` so it tracks the numeral through every breakpoint. */
+.stat__figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Tight, like the inline gold suffixes it sits alongside. */
+  gap: .1em;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+}
+.stat__icon { display: inline-flex; color: var(--accent); }
+.stat__icon svg { width: 1em; height: 1em; display: block; }
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  line-height: 1;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.stat__figure .stat__value { font-size: 1em; }
+.stat__value .suffix { color: var(--accent); }
+.stat__label {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Strengths marquee ---------- */
+/* Thin ticker of specialties between the hero and stats. Two identical groups
+   slide as one track; hover pauses; reduced motion freezes it (see block). */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--border);
+  background: var(--bg);
+  transition: background-color .25s, border-color .25s;
+}
+.marquee__track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__group { display: flex; align-items: center; flex: none; }
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 26px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.marquee__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Testimonials ---------- */
+/* Horizontal rail. Cards snap; the mask fades whichever edge still has more
+   card behind it (the --fade-l/--fade-r vars are flipped by the scroll handler). */
+.tst-rail {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+  padding: 4px 2px 18px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  --fade-l: 0px;
+  --fade-r: 0px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+  transition: -webkit-mask-image .25s linear, mask-image .25s linear;
+}
+.tst-rail::-webkit-scrollbar { display: none; }
+.tst-rail:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: var(--r-lg); }
+.tst-rail > .tst-card {
+  flex: 0 0 clamp(300px, 33%, 420px);
+  scroll-snap-align: start;
+}
+/* The grab cursor is the only affordance saying the rail moves, so it is set
+   from JS (.is-draggable) and only while the track actually overflows. */
+.tst-rail.is-draggable { cursor: grab; }
+.tst-rail.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.tst-rail.is-dragging > .tst-card { pointer-events: none; }
+
+.tst-nav { display: flex; gap: 10px; }
+.tst-nav[hidden] { display: none; }
+.tst-nav__btn {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background-color .2s, transform .2s var(--ease);
+}
+.tst-nav__btn:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+.tst-nav__btn:disabled { opacity: .35; cursor: default; }
+.tst-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .22s var(--ease), box-shadow .22s, border-color .22s, background-color .25s;
+}
+.tst-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: var(--border-strong); }
+.tst-card__top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 20px;
+}
+.tst-card__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+  line-height: .5;
+  height: 20px;
+  color: var(--accent);
+}
+/* What I did on the job. Tagged rather than printed under the client's name,
+   so it can't read as the client's own job title.
+
+   A stadium pill only works on one line, and the longest label ("full-stack
+   Flutter developer") can't fit one at the 280px card floor — it wrapped and
+   broke the shape. Filled rounded-rect: wraps to two balanced lines cleanly. */
+.tst-card__work {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--tile);
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  max-width: 100%;
+  text-align: left;
+  line-height: 1.4;
+  transition: background-color .25s, color .25s;
+}
+.tst-card__quote { font-size: 15.5px; line-height: 1.6; color: var(--ink); }
+.tst-card__who { margin-top: auto; display: flex; flex-direction: column; gap: 3px; }
+.tst-card__name { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+.tst-card__role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ---------- Sections ---------- */
+.section { padding: clamp(72px, 10vw, 122px) 0; }
+.section--tight { padding-top: 0; }
+.section--surface {
+  background: var(--surface);
+  border-block: 1px solid var(--border);
+  transition: background-color .25s, border-color .25s;
+}
+
+.section__head { max-width: 620px; margin-bottom: clamp(38px, 5.5vw, 62px); }
+.section__head h2 {
+  font-size: clamp(1.95rem, 3.6vw, 2.9rem);
+  line-height: 1.06;
+  margin-top: 18px;
+  text-wrap: balance;
+}
+.section__head .lede { margin-top: 14px; font-size: 17px; color: var(--muted); max-width: 36em; }
+
+.section__head--row {
+  max-width: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Ink section (capabilities) ---------- */
+.section--ink {
+  background: var(--panel);
+  color: var(--panel-ink);
+  transition: background-color .25s;
+}
+.section--ink .eyebrow { color: var(--panel-muted); }
+.section--ink .eyebrow::before { background: var(--panel-accent); }
+
+.cap-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.cap-card {
+  background: var(--panel-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: transform .22s var(--ease), border-color .22s;
+}
+.cap-card:hover { transform: translateY(-4px); border-color: rgb(217 168 61 / .45); }
+.cap-card__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgb(217 168 61 / .16);
+  color: var(--panel-accent);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.cap-card h3 { font-size: 19px; font-weight: 500; letter-spacing: -.01em; }
+.cap-card p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--panel-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- Work / project cards ---------- */
+.work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform .22s var(--ease), box-shadow .22s, border-color .22s, background-color .25s;
+}
+/* Stretched title link: whole card opens the case study, but real links
+   (the live-links row) layer above it and stay independently clickable. */
+.project-card__link { display: block; text-decoration: none; color: inherit; }
+.project-card__link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.project-card:hover .project-card__link h3 { color: var(--accent); }
+.project-card__link h3 { transition: color .18s; }
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--border-strong);
+}
+
+.project-card__media {
+  background: var(--tile);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  padding: 0;
+  /* Light covers (white/pastel art) would otherwise bleed into the card body —
+     the hairline keeps the media a distinct block. */
+  border-bottom: 1px solid var(--border);
+}
+/* Edge-to-edge cover: the asset fills the whole tile with no padding and no
+   letterboxing. Sources are mixed (16:9 mockups, 9:19.5 phone screenshots), so
+   anchor the crop to the top — headers/status bars stay visible, the dead
+   bottom of a long screenshot is what gets cut. */
+.project-card__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform .5s var(--ease);
+}
+.project-card:hover .project-card__media img { transform: scale(1.03); }
+
+.project-card__body {
+  padding: 24px 26px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+}
+.project-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.project-card h3 { font-size: 22px; font-weight: 500; letter-spacing: -.015em; }
+.project-card__tag { color: var(--muted); font-size: 15px; }
+.project-card__metrics { display: flex; gap: 6px; flex: none; }
+/* Highlighted social-proof pill (installs / rating). */
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 999px;
+  background: var(--gold-tint);
+  border: 1px solid var(--gold-edge);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  text-transform: none;
+  white-space: nowrap;
+}
+.stat-pill__icon { display: inline-flex; }
+.stat-pill__icon svg { width: 12px; height: 12px; display: block; }
+.stat-pill--star { color: #B8860B; }
+:root[data-theme="dark"] .stat-pill--star { color: var(--accent); }
+.project-card__foot {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.project-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 14.5px;
+}
+.project-card__cta svg { transition: transform .18s var(--ease); }
+.project-card:hover .project-card__cta svg { transform: translateX(3px); }
+
+/* Live external links — layered above the stretched link (z-index) so taps
+   land on the store/site, not the card. */
+.project-card__links { display: flex; gap: 8px; position: relative; z-index: 2; }
+.project-card__ext {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  transition: color .18s, border-color .18s, background-color .18s, transform .18s var(--ease);
+}
+.project-card__ext svg { width: 17px; height: 17px; }
+.project-card__ext:hover {
+  color: var(--accent);
+  border-color: var(--gold-edge);
+  background: var(--gold-tint);
+  transform: translateY(-1px);
+}
+
+/* Featured variant */
+.project-card--featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.08fr .92fr; }
+.project-card--featured .project-card__media {
+  aspect-ratio: auto;
+  min-height: 320px;
+  order: 2;
+  align-self: stretch;
+}
+.project-card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.project-card__eyebrow::before { content: ""; width: 18px; height: 2px; background: var(--accent); }
+.project-card--featured .project-card__body {
+  order: 1;
+  padding: clamp(30px, 4vw, 48px);
+  justify-content: center;
+  gap: 12px;
+}
+.project-card--featured h3 { font-size: clamp(1.7rem, 3vw, 2.35rem); font-weight: 600; }
+.project-card--featured .project-card__desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 34em;
+}
+.project-card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+/* "Browse all" band - the section-head link is easy to scroll past, so the
+   rest of the work gets a highlighted full-width target at the end of the
+   grid. Gold ground + a rule down the leading edge set it apart from the cards
+   above: it reads as a door out of the section, not as a sixth card. */
+.work-more {
+  position: relative;
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 34px);
+  padding: clamp(24px, 3vw, 32px) clamp(24px, 3vw, 36px);
+  /* Clears the gold bar on the leading edge. */
+  padding-inline-start: clamp(36px, 4vw, 52px);
+  border: 1px solid var(--gold-edge);
+  border-radius: var(--r-lg);
+  background: var(--gold-tint);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .22s var(--ease), box-shadow .22s, border-color .22s, background-color .25s;
+}
+.work-more[hidden] { display: none; }
+/* Gold bar down the leading edge - the eyebrow marker turned vertical, so the
+   band is flagged where the eye enters it rather than capped across the top.
+   Inset and fully rounded: it sits inside the band as a mark, it does not cap
+   the edge. */
+.work-more::before {
+  content: "";
+  position: absolute;
+  inset-block: clamp(20px, 2.4vw, 28px);
+  inset-inline-start: clamp(12px, 1.4vw, 16px);
+  width: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+.work-more:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--accent);
+}
+
+/* Overlapping cover stack - the art of what is behind the band. */
+.work-more__thumbs { display: flex; flex: none; padding-left: 12px; }
+.work-more__thumb {
+  width: 64px;
+  height: 64px;
+  margin-left: -12px;
+  border-radius: 16px;
+  border: 2px solid var(--gold-tint);
+  background: var(--tile);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 18px -8px rgb(28 25 23 / .35);
+  transition: transform .22s var(--ease), border-color .25s;
+}
+.work-more__thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.work-more__thumb--glyph {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--faint);
+}
+/* Hover fans the stack open a little so it reads as a pile, not a strip. */
+.work-more:hover .work-more__thumb { transform: translateX(6px); }
+.work-more:hover .work-more__thumb:first-child { transform: translateX(0); }
+.work-more:hover .work-more__thumb:nth-child(3) { transform: translateX(12px); }
+.work-more:hover .work-more__thumb:nth-child(4) { transform: translateX(18px); }
+
+.work-more__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.work-more__kicker {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.work-more__title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.1vw, 25px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+.work-more__sub {
+  color: var(--muted);
+  font-size: 14.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.work-more__cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 500;
+  font-size: 16px;
+  white-space: nowrap;
+  transition: background-color .18s;
+}
+.work-more__cta svg.arrow { transition: transform .18s var(--ease); }
+.work-more:hover .work-more__cta { background: var(--accent-hover); }
+.work-more:hover .work-more__cta svg.arrow { transform: translateX(3px); }
+
+/* ---------- Experience roster ----------
+   An index of employers, not a resume table: each one is a line of display type
+   on a rule, and opening it drops its roles underneath. The section sits
+   between the work cards and the testimonial cards, so a third grid of boxes
+   would have flattened all three - this is deliberately a list. */
+.roster { border-bottom: 1px solid var(--border); }
+
+.stint { position: relative; border-top: 1px solid var(--border); }
+/* The gold segment over the rule is the mark the process steps carry. It runs
+   the full width of the open employer, so the rule reads as active. */
+.stint::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 0;
+  width: 52px;
+  height: 2px;
+  background: var(--accent);
+  transition: width .5s var(--ease);
+}
+.stint[open]::before { width: 100%; }
+
+/* Four columns on one baseline: who, what, when, and the control. The middle
+   column is what a closed row would otherwise waste as dead space. */
+.stint__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) auto auto;
+  align-items: baseline;
+  gap: clamp(16px, 2.4vw, 36px);
+  padding: clamp(20px, 2.6vw, 30px) 0;
+  cursor: pointer;
+  list-style: none;
+}
+.stint__head::-webkit-details-marker { display: none; }
+.stint__head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.stint__name {
+  min-width: 0;
+  font-family: var(--font-display);
+  /* Capped so the longest employer name holds one line at desktop: a wrap here
+     sets the row height off the name and tears a hole under the other columns. */
+  font-size: clamp(25px, 3.1vw, 40px);
+  font-weight: 600;
+  /* Floor is -.04em; display type this size can take the tightening. */
+  letter-spacing: -.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+  color: var(--muted);
+  transition: color .28s var(--ease);
+}
+.stint[open] .stint__name,
+.stint__head:hover .stint__name { color: var(--ink); }
+.stint[open] .stint__name { color: var(--accent); }
+
+/* The roles this employer covers, read at a glance before anything is opened.
+   They give way to the full entries once the row is open, so nothing is said
+   twice. */
+.stint__roles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.stint__chip {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.35;
+  transition: color .28s var(--ease);
+}
+.stint__head:hover .stint__chip { color: var(--ink); }
+/* Once open, the entries below say it in full, so the preview steps aside and
+   the name takes the space it leaves. */
+.stint[open] .stint__roles { display: none; }
+.stint[open] .stint__name { grid-column: 1 / 3; }
+
+.stint__span {
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.stint__mark {
+  display: inline-flex;
+  /* Centred on the row, not on the display type's baseline, so it holds the
+     same place whether the row is one line or two. */
+  align-self: center;
+  color: var(--faint);
+  transition: transform .34s var(--ease), color .28s;
+}
+.stint[open] .stint__mark { transform: rotate(180deg); color: var(--accent); }
+
+/* ---------- Roles inside an employer ---------- */
+.stint__body { padding-bottom: clamp(20px, 2.6vw, 32px); }
+.stint__role {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 2fr);
+  gap: clamp(16px, 3vw, 48px);
+  padding-top: clamp(14px, 1.8vw, 22px);
+}
+.stint__role + .stint__role { margin-top: clamp(14px, 1.8vw, 22px); border-top: 1px solid var(--border); }
+.stint__meta { display: flex; flex-direction: column; gap: 5px; }
+.stint__title { font-size: 17px; font-weight: 500; letter-spacing: -.01em; text-wrap: balance; }
+.stint__period {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--faint);
+}
+.stint__text {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.65;
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+/* Height animation where the browser can interpolate to `auto`; elsewhere the
+   panel simply appears, which is the correct fallback for a disclosure. */
+@supports (interpolate-size: allow-keywords) {
+  .roster { interpolate-size: allow-keywords; }
+  .stint::details-content {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: block-size .42s var(--ease), opacity .3s, content-visibility .42s allow-discrete;
+    transition-behavior: allow-discrete;
+  }
+  .stint[open]::details-content { block-size: auto; opacity: 1; }
+}
+
+/* ---------- Process ---------- */
+.process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 48px); }
+.step { border-top: 2px solid var(--border); padding-top: 24px; position: relative; }
+.step::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 52px;
+  height: 2px;
+  background: var(--accent);
+}
+.step__num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--accent);
+}
+.step h3 { font-size: 22px; font-weight: 500; margin: 12px 0 9px; }
+.step p { color: var(--muted); font-size: 15.5px; line-height: 1.6; }
+
+/* ---------- About ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: clamp(40px, 6vw, 76px);
+  align-items: start;
+}
+.about__bio {
+  margin-top: 18px;
+  font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+  line-height: 1.65;
+  color: var(--muted);
+}
+.about__bio strong { color: var(--ink); font-weight: 500; }
+.about__chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+.pitch-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 28px 14px;
+  transition: background-color .25s, border-color .25s;
+}
+.pitch-card__title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.pitch-card ul { list-style: none; margin: 0; padding: 0; }
+.pitch-card li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+.pitch-card li:first-child { border-top: 0; }
+/* The lead bullet is the one line the card is really selling. */
+.pitch-card li.is-lead { font-size: 17.5px; line-height: 1.5; color: var(--ink); font-weight: 500; padding-bottom: 19px; }
+.pitch-card li.is-lead .pitch-check { background: var(--accent); color: var(--card); }
+.pitch-check {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold-tint);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  margin-top: 1px;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+
+/* ---------- CTA panel ---------- */
+.cta-panel {
+  background: var(--gold-tint);
+  border: 1px solid var(--gold-edge);
+  border-radius: var(--r-xl);
+  padding: clamp(52px, 8vw, 92px) clamp(24px, 6vw, 80px);
+  text-align: center;
+  transition: background-color .25s, border-color .25s;
+}
+.cta-panel h2 {
+  font-size: clamp(2.1rem, 4.4vw, 3.3rem);
+  line-height: 1.05;
+  text-wrap: balance;
+  max-width: 17em;
+  margin-inline: auto;
+}
+.cta-panel .lede {
+  margin: 18px auto 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  max-width: 38em;
+}
+.cta-panel .btn { margin-top: 34px; }
+.cta-links {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cta-email {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  letter-spacing: .02em;
+  color: var(--muted);
+  text-decoration: none;
+}
+.cta-email:hover { color: var(--accent); }
+
+/* ---------- Footer ---------- */
+.footer { border-top: 1px solid var(--border); padding: 30px 0; }
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+}
+.footer__links { display: flex; gap: 20px; }
+/* 14px text gave a 22px-tall tap target, under the 24px minimum. The padding
+   is cancelled by an equal negative margin, so the hit area grows to 42px
+   without moving anything. */
+.footer__links a {
+  text-decoration: none;
+  color: var(--muted);
+  transition: color .18s;
+  padding-block: 10px;
+  margin-block: -10px;
+}
+.footer__links a:hover { color: var(--ink); }
+
+/* ---------- Projects page ---------- */
+.page-head { padding: clamp(30px, 4.5vw, 54px) 0 clamp(34px, 5vw, 54px); }
+.page-head h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-top: 18px; }
+.page-head .lede { margin-top: 14px; color: var(--muted); font-size: 17px; }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding-bottom: clamp(72px, 10vw, 120px);
+}
+
+/* ---------- Project detail ---------- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color .18s;
+  /* 12.5px mono text is a 20px-tall tap target — under the 24px minimum, and
+     this is the only way back on the case page. Padding cancelled by an equal
+     negative margin: 40px to hit, same 20px in the layout. */
+  padding-block: 10px;
+  margin-block: -10px;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ---- Case study hero --------------------------------------------------
+   Editorial, not a card stack: one hairline rule carries the meta row (the way
+   back, and what the app runs on), then a two-column spread — name, proof and
+   links on the left, the shot on the right, both starting on the same line so
+   the art sits at eye level instead of floating halfway down the page. */
+.case-rule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  margin-top: clamp(20px, 2.6vw, 30px);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.case-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.case-status__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--live) 20%, transparent);
+}
+
+/* Two rows, two columns: the name sits on the same line as the shot, and the
+   proof block runs under the name — so the art is never stranded halfway down
+   the page. Stacked, the order becomes name → shot → proof, the way a store
+   listing reads. */
+.case-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+  grid-template-areas:
+    "head shot"
+    "body shot";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(36px, 5vw, 64px);
+  row-gap: clamp(22px, 2.6vw, 30px);
+  align-items: start;
+  /* Tight to the rule above it: the title is what the rule introduces, so the
+     two belong to the same group. The generous space is saved for below. */
+  padding: clamp(22px, 2.4vw, 30px) 0 clamp(60px, 8vw, 96px);
+}
+
+.case-hero__head { grid-area: head; min-width: 0; }
+.case-hero__col { grid-area: body; min-width: 0; }
+/* The shot spans both rows and is sized by its column: width from the track,
+   height from the asset's own ratio.
+
+   It used to `align-self: stretch` with `height: 100%` to end flush with the
+   text block. That cannot coexist with the frame's aspect-ratio — one of the
+   two has to give. With the height definite the ratio resolved the *width*
+   from it (754px in a 449px track, a horizontal scrollbar on the page); capped
+   at the track width instead, the stretched height stayed and `object-fit:
+   cover` ate a third of the asset. Width-driven, the ratio is the only thing
+   setting the height, so the shot is never zoomed past its clamp. */
+.case-hero .case-shot { grid-area: shot; align-self: start; }
+.case-hero--lean { align-items: center; }
+.case-hero--lean .case-shot__frame { max-height: min(56vh, 520px); }
+
+.case-hero h1 {
+  /* The display cut leaves slack above the cap height; pulling the line box up
+     sets the title optically on the rule above it rather than below it. */
+  margin: -.06em 0 0;
+  /* The 2.7rem floor was set for the desktop ramp and never re-checked against
+     a 320px screen, where it left a long name (Flutter Commerce) two crowded
+     lines wide. Only the floor moves: at 550px and up the vw term still wins,
+     so nothing above phone width changes. */
+  font-size: clamp(2.2rem, 6.4vw, 4.6rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.case-hero__tagline {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+  font-weight: 500;
+  letter-spacing: -.015em;
+  color: var(--accent);
+}
+.case-hero .detail-desc { margin: 0 0 30px; }
+
+/* Traction spec sheet */
+.traction {
+  display: flex;
+  flex-wrap: wrap;
+  /* Rules end with the numbers, not at the column edge — a hairline running
+     past the last value reads like an unfinished table. */
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 30px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.traction__item {
+  padding: 18px 26px 17px 0;
+  min-width: 132px;
+}
+.traction__item + .traction__item {
+  padding-left: 26px;
+  border-left: 1px solid var(--border);
+}
+.traction dt {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.traction dd {
+  margin: 7px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.035em;
+  font-variant-numeric: tabular-nums;
+}
+/* Two identical star rows stacked; the gold one is clipped to the score. */
+.traction__meter { position: relative; display: block; width: max-content; margin-top: 9px; }
+.traction__meter-track,
+.traction__meter-fill { display: flex; gap: 3px; flex-wrap: nowrap; }
+.traction__meter svg { width: 13px; height: 13px; flex: none; display: block; }
+.traction__meter-track { color: color-mix(in srgb, var(--ink) 17%, transparent); }
+.traction__meter-fill { position: absolute; inset: 0; overflow: hidden; color: #C08A00; }
+:root[data-theme="dark"] .traction__meter-fill { color: var(--accent); }
+
+.meta-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 26px;
+  font-size: 15px;
+  align-items: baseline;
+}
+.meta-list dt {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.store-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.detail-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+
+/* Store badges — always-dark, like the real App Store / Google Play badges. */
+.store-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 22px 0 18px;
+  border-radius: 14px;
+  background: #0C0A08;
+  color: #FFFFFF;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, .16);
+  transition: transform .18s var(--ease), box-shadow .18s, border-color .18s;
+}
+.store-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, .28);
+  box-shadow: 0 14px 30px -14px rgb(0 0 0 / .55);
+}
+.store-badge__icon { flex: none; }
+.store-badge__text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.08; }
+.store-badge__sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .82;
+}
+.store-badge__name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+/* Case-study shot — presented flush. The asset fills its frame edge to edge
+   (no padding, no letterbox), the frame takes the asset's own aspect ratio via
+   fitShot(), and the only chrome is a hairline plus the page shadow. */
+/* `min-width: 0` is load-bearing, not defensive: the frame carries both an
+   aspect-ratio and a min-height, so its automatic minimum size is
+   min-height x ratio (442px for a 1.3 shot). As a grid item that minimum
+   became the column's floor, blew the `1fr` track past the container and gave
+   the whole page a horizontal scrollbar on every phone. */
+.case-shot { margin: 0; min-width: 0; }
+.case-shot__frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  min-height: 340px;
+  max-height: min(76vh, 720px);
+  /* A guard, not the sizing rule: nothing should make the height definite
+     again (see .case-hero .case-shot above), but if anything does, the frame
+     stays inside its column rather than scrolling the page. */
+  max-width: 100%;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  background: var(--tile);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.case-shot__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* No-asset projects: the fallback tile carries its own frame, since
+   .case-shot itself is only a positioning wrapper. */
+.case-shot.cover-fallback {
+  border: 1px solid var(--gold-edge);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+.cover-fallback {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 34px;
+  background: var(--gold-tint);
+}
+.cover-fallback__glyph {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(64px, 10vw, 108px);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--accent);
+}
+.cover-fallback__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Challenge pull-quote band */
+.quote-band {
+  background: var(--panel);
+  color: var(--panel-ink);
+  padding: clamp(64px, 9vw, 110px) 0;
+  transition: background-color .25s;
+}
+.quote-band .eyebrow { color: var(--panel-muted); }
+.quote-band .eyebrow::before { background: var(--panel-accent); }
+.quote-band blockquote {
+  margin-top: 24px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 2.05rem);
+  line-height: 1.32;
+  letter-spacing: -.012em;
+  max-width: 30em;
+  text-wrap: pretty;
+}
+
+/* Features */
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.feature {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.feature .pitch-check { margin-top: 2px; }
+
+/* ---------- Gallery carousel (Swiper) ----------
+   Swiper owns the motion; everything below is presentation.
+
+   One source for the track geometry. `--gap` is read back by Swiper through
+   spaceBetween, so the CSS and the JS cannot drift; `--peek` is how much of
+   each neighbouring shot shows past the centred one. */
+.carousel {
+  --shot-w: clamp(196px, 18vw, 248px);
+  --gap: 20px;
+  --peek: .30;
+  --lane: 74px;
+}
+
+/* The band holds the centre shot, one full neighbour either side, then a
+   --peek slice of the next — five slides across, which is the wide layout the
+   gallery had before. The slice used to be whatever pixels happened to be
+   left over (44px, 16% of a shot) and the fade mask was also 44px, so the
+   cropped shot sat entirely behind the gradient. Deriving the band from the
+   shot width instead makes that slice a number you set, not a remainder. */
+.carousel__frame {
+  --track: calc(var(--shot-w) * (3 + 2 * var(--peek)) + 4 * var(--gap));
+  position: relative;
+  width: min(100% - 48px, calc(var(--track) + 2 * var(--lane)));
+  margin-inline: auto;
+  padding-inline: var(--lane);
+}
+/* Fades sit on the track's own edges (inside the arrow lanes) so the cut-off
+   is soft. Kept well under the width of the cropped slice so it veils that
+   shot rather than erasing it. In loop mode neither end is ever reached, so
+   both stay lit — which is true: there is always more track either way. */
+.carousel__frame::before,
+.carousel__frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+  transition: opacity .25s var(--ease);
+}
+.carousel__frame::before { left: var(--lane);  background: linear-gradient(90deg, var(--bg), transparent); }
+.carousel__frame::after  { right: var(--lane); background: linear-gradient(270deg, var(--bg), transparent); }
+.carousel.at-start .carousel__frame::before,
+.carousel.at-end .carousel__frame::after,
+.carousel.is-static .carousel__frame::before,
+.carousel.is-static .carousel__frame::after { opacity: 0; }
+
+/* Vertical padding leaves room for the hover lift and the phone shadow. */
+.carousel .swiper { padding: 14px 0 26px; }
+.carousel .swiper-slide {
+  width: auto;          /* slidesPerView: "auto" — the shot sets the width */
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* The whole shot is the control — a click opens it full size. */
+.carousel__open {
+  position: relative;
+  display: block;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: transform .3s var(--ease);
+}
+.carousel__open:hover { transform: translateY(-6px); }
+.carousel__open:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.swiper-grabbing .carousel__open { transform: none; }
+
+.carousel__zoom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 6px 18px -6px rgb(0 0 0 / .5);
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .22s var(--ease), transform .22s var(--ease);
+}
+.carousel__open:hover .carousel__zoom,
+.carousel__open:focus-visible .carousel__zoom { opacity: 1; transform: none; }
+
+/* Arrows — they ride the track's own edges, above the fade masks (z-index 2),
+   so the control sits exactly where the content is cut off. One press advances
+   one shot. Present at every width: the old pair lived in the heading row and
+   was display:none under 768px, which left touch users no visible control. */
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  /* Slightly translucent so the shot reads through the button rather than the
+     button punching a hole in the track; opaque fallback first. */
+  background: var(--card);
+  background: color-mix(in srgb, var(--card) 84%, transparent);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  transform: translateY(-50%);
+  transition: background .2s, color .2s, border-color .2s, opacity .25s var(--ease), box-shadow .2s;
+}
+/* Parked in the arrow lane, clear of the shots rather than on top of them. */
+.carousel__arrow--prev { left: 0; }
+.carousel__arrow--next { right: 0; }
+.carousel__arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.carousel__arrow:active { box-shadow: none; }
+.carousel__arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Dimmed rather than removed — a vanishing control reads as a missing one. */
+.carousel__arrow.is-disabled {
+  opacity: .3;
+  cursor: default;
+  pointer-events: none;
+  box-shadow: none;
+}
+/* Everything fits: the controls have nothing to do. */
+.carousel.is-static .carousel__arrow,
+.carousel__arrow.is-locked { display: none; }
+
+/* Fallback — Swiper never loaded. The wrapper becomes a scroll-snap strip so
+   every screen is still reachable; the controls it would have driven go away. */
+.carousel.is-native .swiper {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+/* Swiper's stylesheet ships from the same CDN as its script, so a block there
+   takes both — the flex row the wrapper relies on is restated here rather than
+   inherited, otherwise the fallback stacks the shots vertically. */
+.carousel.is-native .swiper-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.carousel.is-native .swiper-slide { flex: none; scroll-snap-align: start; }
+.carousel.is-native .carousel__arrow { display: none; }
+
+/* ---------- Lightbox (GLightbox) ----------
+   The library ships its own shell; these are the brand corrections. */
+.glightbox-container .gclose:hover svg,
+.glightbox-container .gnext:hover svg,
+.glightbox-container .gprev:hover svg { fill: var(--accent); }
+.glightbox-container .gslide-description { background: transparent; }
+.glightbox-container .gslide-desc {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-align: center;
+  color: rgb(255 255 255 / .72);
+}
+.gbtn.focused { outline: 2px solid var(--accent); }
+
+.shot {
+  position: relative;
+  width: var(--shot-w);
+  aspect-ratio: 9 / 19;
+}
+.shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+
+/* Flat frame — the old presentation: rounded slab, no device chrome. */
+.shot--plain {
+  border-radius: 30px;
+  border: 6px solid var(--phone);
+  background: var(--phone);
+  overflow: hidden;
+}
+
+/* Raw — no chrome at all. The card takes the assets' own ratio, measured once
+   in JS off the first decoded shot and published as --shot-ar (the fallback is
+   a 6.7" phone, which is what every gallery in the config ships). Letting each
+   <img> size its own figure instead made the slide width depend on decode: a
+   lazy image parked in the horizontal overflow never intersects the viewport,
+   so it stayed 0x0 and collapsed the track under Swiper's measurement. */
+.shot--raw {
+  width: var(--shot-w);
+  height: auto;
+  aspect-ratio: var(--shot-ar, 9 / 19.5);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: transparent;
+  line-height: 0;
+}
+.shot--raw img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* iPhone mockup — all chrome is CSS, scaled off --shot-w so it holds at any
+   track width. Ratios follow a 6.7" device: 9/19.5 body, ~1.9% bezel. */
+.shot--device {
+  position: relative;
+  aspect-ratio: 9 / 19.5;
+  padding: calc(var(--shot-w) * .019);
+  border-radius: calc(var(--shot-w) * .158);
+  background:
+    var(--device-body);
+  box-shadow:
+    var(--shadow-phone),
+    inset 0 0 0 1px var(--device-rim),
+    inset 0 0 0 calc(var(--shot-w) * .012) var(--device-edge);
+}
+.device__screen {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--shot-w) * .139);
+  overflow: hidden;
+  background: #000;
+}
+/* Dynamic Island */
+.device__island {
+  position: absolute;
+  top: calc(var(--shot-w) * .032);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(var(--shot-w) * .27);
+  height: calc(var(--shot-w) * .078);
+  border-radius: 999px;
+  background: #08080a;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .06);
+}
+/* Side buttons */
+.device__btn {
+  position: absolute;
+  width: calc(var(--shot-w) * .012);
+  border-radius: 2px;
+  background: linear-gradient(180deg, #4a453d, #262320);
+}
+.device__btn--silent { left: calc(var(--shot-w) * -.008); top: 15%;   height: 4.2%; }
+.device__btn--up     { left: calc(var(--shot-w) * -.008); top: 23%;   height: 8%; }
+.device__btn--down   { left: calc(var(--shot-w) * -.008); top: 33.5%; height: 8%; }
+.device__btn--power  { right: calc(var(--shot-w) * -.008); top: 26%;  height: 12%; }
+
+/* Prev / next pager */
+.pager { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pager a {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 24px 26px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transition: transform .2s var(--ease), border-color .2s, box-shadow .2s;
+}
+.pager a:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-card); }
+.pager__label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pager__name { font-family: var(--font-display); font-weight: 500; font-size: 20px; letter-spacing: -.01em; }
+.pager a.pager--next { text-align: right; align-items: flex-end; }
+
+/* Not found */
+.notfound { padding: clamp(80px, 14vw, 160px) 0; text-align: center; }
+.notfound h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 16px; }
+.notfound p { color: var(--muted); margin-bottom: 28px; }
+
+/* ---------- Reveal animations ---------- */
+html.js .reveal { opacity: 0; transform: translateY(18px); }
+html.js .reveal.in {
+  opacity: 1;
+  transform: none;
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  /* Not matched by the blanket `*, *::before, *::after` rule below. */
+  .stint::details-content { transition: opacity .01ms; }
+
+  html { scroll-behavior: auto; }
+  html.js .reveal { opacity: 1; transform: none; transition: none; }
+  .chip__dot { animation: none; }
+  /* The wall's drift is off in JS (driveHeroWall); drag still works. */
+  .app-wall__hint { transition: none; }
+  .marquee__track { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1023px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .hero__inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero__visual { max-width: 580px; margin-inline: auto; width: 100%; }
+
+  .about-grid { grid-template-columns: 1fr; }
+  .case-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas: "head" "shot" "body";
+    grid-template-rows: auto auto auto;
+  }
+  .case-shot { max-width: 520px; width: 100%; position: relative; top: auto; margin-inline: auto; }
+
+  .stat { padding-inline: clamp(10px, 2vw, 18px); }
+}
+
+@media (max-width: 767px) {
+  .container { width: min(1120px, 100% - 40px); }
+
+  .nav__links, .nav__availability, .nav__cta { display: none; }
+  .nav__hamburger { display: inline-grid; }
+
+  .stint__role { grid-template-columns: 1fr; gap: 10px; }
+  /* Name, roles and span stack into one column; the control holds the right. */
+  .stint__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 8px;
+  }
+  .stint__name { grid-area: 1 / 1; }
+  .stint__roles { grid-area: 2 / 1; }
+  /* Stacked under the name, so it reads left like everything above it. */
+  .stint__span { grid-area: 3 / 1; justify-self: start; }
+  .stint__mark { grid-area: 1 / 2 / span 3 / 3; align-self: center; }
+  .stint[open] .stint__mark { grid-row: 1 / span 2; }
+
+  .work-grid { grid-template-columns: 1fr; }
+  .work-more { flex-direction: column; align-items: stretch; text-align: center; gap: 18px; }
+  /* Stacked and centred: the bar loses its gutter and becomes a short marker
+     above the content, the way the section eyebrows are marked. */
+  .work-more { padding-inline: clamp(24px, 3vw, 36px); padding-top: 32px; }
+  .work-more::before {
+    inset-block: 16px auto;
+    inset-inline: 50% auto;
+    width: 44px;
+    height: 4px;
+    transform: translateX(-50%);
+  }
+  .work-more__thumbs { justify-content: center; padding-left: 12px; }
+  .work-more__sub { white-space: normal; }
+  .work-more__cta { height: 52px; }
+  .project-card--featured { grid-template-columns: 1fr; }
+  .project-card--featured .project-card__media { order: 1; aspect-ratio: 16 / 10; min-height: 0; }
+  .project-card--featured .project-card__body { order: 2; }
+
+  .process-grid { grid-template-columns: 1fr; gap: 30px; }
+  .features-grid { grid-template-columns: 1fr; gap: 0; }
+  .cap-grid { grid-template-columns: 1fr; }
+  .tst-rail > .tst-card { flex-basis: min(88%, 360px); }
+  .projects-grid { grid-template-columns: 1fr; }
+  .pager { grid-template-columns: 1fr; }
+
+  /* Stacked, the shot has the full column and no text beside it to match, so
+     the 340px floor only forces a crop — the asset's own ratio is the better
+     height. The cap keeps a portrait screenshot from filling the whole screen
+     before the description is reached. */
+  .case-shot__frame { min-height: 0; max-height: min(68vh, 560px); }
+}
+
+@media (max-width: 479px) {
+  .container { width: min(1120px, 100% - 32px); }
+  .traction__item { padding-right: 18px; min-width: 118px; }
+  .traction__item + .traction__item { padding-left: 18px; }
+  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__cta .btn { width: 100%; }
+  .cta-panel .btn { width: min(100%, 320px); }
+}
+
+/* ---------- Carousel responsive ---------- */
+@media (max-width: 1023px) {
+  /* Below this the arrow lanes cost more than they are worth: they push the
+     band past the available width, and the cropped slice — the first thing the
+     width clamp eats — collapses to a few pixels. The arrows overlay the track
+     edges instead, which hands those 148px back to the shots. */
+  .carousel { --lane: 0px; --shot-w: clamp(180px, 20vw, 244px); }
+  .carousel__arrow--prev { left: 4px; }
+  .carousel__arrow--next { right: 4px; }
+}
+
+@media (max-width: 767px) {
+  /* A phone is too narrow to hold five slides without shrinking the shots to
+     nothing, so this range runs three: centre plus one cropped neighbour each
+     side. The shot is kept wide enough to stay on that side of the line —
+     sized to land near five slides instead, the band would pass through the
+     5-to-3 crossover around 700-760px, where the cropped slice is zero by
+     definition. Arrows shrink to match. */
+  .carousel { --shot-w: min(240px, 54vw); --gap: 16px; }
+  .carousel__frame { width: min(100% - 32px, calc(var(--track) + 2 * var(--lane))); }
+  .carousel__arrow { width: 42px; height: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__open:hover { transform: none; }
+  .carousel__arrow { transition: none; }
+}

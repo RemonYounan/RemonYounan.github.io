@@ -1,0 +1,28 @@
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/
+
+# --- Node ---
+node_modules/
+npm-debug.log*
+yarn-error.log
+*.log
+
+# --- Authoring material kept outside the repo ---
+# This repository is the published site and nothing else. The screenshot
+# masters and the scripts that turn them into the committed assets are large,
+# never served, and live alongside it rather than in it (see README.md).
+# These entries exist so a local copy of either can sit here unstaged.
+assets-src/
+tools/
+
+# --- Scratch / temp ---
+.scratch/
+*.tmp
+config.js.tmp.*
+screencapture-*.png
+*.pdf
