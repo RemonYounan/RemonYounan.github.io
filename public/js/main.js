@@ -923,9 +923,8 @@
       FRICTION = 3.4, // per second — how fast a throw bleeds off
       MAX_FLING = 2600; // px/s cap so a hard throw stays readable
 
-    var reduce =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // The drift ignores prefers-reduced-motion on purpose: it is slow, and a
+    // still wall reads as broken. Keyboard focus still pauses it (drifting()).
     var fine =
       !window.matchMedia || window.matchMedia("(pointer: fine)").matches;
 
@@ -955,7 +954,6 @@
     }
 
     function drifting() {
-      if (reduce) return false;
       // Keyboard focus holds the wall still so a tabbed-to tile can be read —
       // but a *mouse* press focuses the link it lands on, so plain
       // :focus-within would leave the wall frozen after every drag until the

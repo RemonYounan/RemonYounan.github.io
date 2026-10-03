@@ -1979,7 +1979,7 @@ html.js .reveal.in {
   html { scroll-behavior: auto; }
   html.js .reveal { opacity: 1; transform: none; transition: none; }
   .chip__dot { animation: none; }
-  /* The wall's drift is off in JS (driveHeroWall); drag still works. */
+  /* The wall's drift deliberately keeps running (driveHeroWall). */
   .app-wall__hint { transition: none; }
   .marquee__track { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
