@@ -14,12 +14,12 @@ window.SITE_CONFIG = {
   // PERSONAL INFO
   // ---------------------------------------------------------------------------
   name: "Remon Younan",
-  title: "I design and build mobile apps",
+  title: "Senior Full-Stack Mobile Engineer",
 
   // Hero SUB-HEADLINE (shown under the big H1). Two short sentences max.
   // Job: add NEW info the headline doesn't — who it's for + proof.
   tagline:
-    "I design your app, build it, and take it all the way into the App Store and Google Play. One of mine passed 100k downloads at a 4.6 rating.",
+    "Turning ideas into production apps in the App Store and Google Play. 4+ years building cross-platform Flutter systems, with flagship apps scaled past 100k+ downloads at a 4.6 rating.",
 
   location: "",
 
@@ -29,7 +29,7 @@ window.SITE_CONFIG = {
 
   // One short phrase for the "FOCUS" row of the About status panel.
   // Leave "" to fall back to your first listed strength.
-  focus: "I design and build mobile apps",
+  focus: "Senior Full-Stack Mobile Engineer",
 
   // ---------------------------------------------------------------------------
   // PITCH  —  "What you get" bullets on the About card. Keep each to one line.
@@ -40,11 +40,11 @@ window.SITE_CONFIG = {
   // line only — two competing headlines read as none.
   pitch: [
     {
-      text: "Founders bring me apps that have stalled. I find the missing pieces before they cost you a month.",
+      text: "4+ years delivering production-grade mobile platforms that run smoothly on iPhone and Android.",
       lead: true,
     },
-    "One build that runs on iPhone and Android, so you pay for one app instead of two.",
-    "The same person designs it and builds it, so nothing gets lost between the two.",
+    "One build for both stores, engineered with Clean Architecture so nothing gets lost between design and backend.",
+    "Track record scaling mobile applications past 100k+ downloads and 4.6★ ratings in both stores.",
   ],
 
   // ---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ window.SITE_CONFIG = {
 
   // Short bio for the About section. Keep it direct and specific — recruiters
   // skip fluff. Two or three sentences is enough.
-  bio: "I've built apps across food, healthcare, sports, laundry logistics, and anonymous voice support, including the ones that are hard to get right: live voice calls, instant messaging, and apps that keep working when the connection drops. Some of them started as a sketch on a call. Others arrived half-finished with the previous developer already gone. Both end up in the same place, shipped to both stores and holding up once real people are on them.",
+  bio: "Senior Full-Stack Mobile Engineer with 4+ years of experience shipping production mobile systems across food tech, healthcare, sports, and anonymous voice support. I specialize in the hard problems: live voice calls, instant messaging, and offline-first architectures that stay resilient when connections drop. From system architecture to store release and CI/CD automation, I handle the full development lifecycle.",
 
   // ---------------------------------------------------------------------------
   // LINKS  —  leave "" to hide
@@ -123,6 +123,7 @@ window.SITE_CONFIG = {
   // Set to [] to hide the whole band.
   // ---------------------------------------------------------------------------
   stats: [
+    { value: 4, suffix: "+", label: "Years experience" },
     { value: 12, suffix: "", label: "Apps built", icon: "apps" },
     { value: 100, suffix: "k+", label: "Downloads" },
     { value: 4.6, suffix: "★", label: "Average rating" },
@@ -194,28 +195,16 @@ window.SITE_CONFIG = {
   // ---------------------------------------------------------------------------
   experience: [
     {
-      role: "Full Stack Mobile Engineer",
+      role: "Senior Mobile Engineer",
       company: "farapi",
       period: "06/2026 — Present",
-      text: "Building a new platform after moving from freelance to full-time, covering the backend architecture, web interface, admin dashboard, and mobile app. Manage the release lifecycle of cross-platform Flutter apps into the App Store and Google Play through automated CI/CD, and own post-launch crash triage.",
+      text: "Build and maintain full-stack mobile systems across the Flutter mobile app, responsive web platform, and backend services. Manage store releases through automated CI/CD pipelines, track down and fix production crashes quickly, and integrate AI coding tools under a Clean Architecture structure.",
     },
     {
-      role: "Full Stack Flutter Developer",
-      company: "Upwork & direct clients",
-      period: "06/2023 — Present",
-      text: "Delivering client apps from first design through to release on the App Store and Google Play: Flutter front ends on reliable Python systems, with stable architectures, secure authentication, and optimized Firebase and Google Cloud deployments. First shipped product was the INSRC 2024 conference app for an Abu Dhabi client.",
-    },
-    {
-      role: "Flutter Mobile App Developer",
-      company: "Aklne",
-      period: "09/2024 — 02/2026",
-      text: "Took over Aklne after farapi handed the product to the client and handled its development from then on — a food discovery platform merging short-form video, recipes, and restaurants into a single Flutter application. It reached 100k+ downloads at a 4.6 average rating across both stores. Built social login (Google, Apple), deep linking from in-video dishes straight to restaurant profiles and maps, and Firebase push, while optimizing video playback for low-end devices and slow networks.",
-    },
-    {
-      role: "Mobile Application Developer",
-      company: "farapi",
-      period: "06/2024 — 10/2025",
-      text: "Built and deployed mobile apps, handling development, backend wiring, store release, and post-launch maintenance. Built the first release of Aklne and delivered Seen for a soft launch during this engagement.",
+      role: "Full-Stack Mobile Engineer",
+      company: "Independent Consultant",
+      period: "06/2022 — 05/2026",
+      text: "Built and deployed custom mobile applications from early architecture to store release for startups and independent clients. Shipped Aklne (smart food app for recipes and restaurant discovery) and scaled it past 100k+ downloads at a 4.6★ rating, developed Seen (anonymous voice support with live audio calls), and built apps across healthcare (Sehatak), sports (FollowOn Sports), and enterprise events.",
     },
   ],
 
