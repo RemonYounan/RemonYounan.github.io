@@ -195,16 +195,22 @@ window.SITE_CONFIG = {
   // ---------------------------------------------------------------------------
   experience: [
     {
-      role: "Senior Mobile Engineer",
+      role: "Senior Full-Stack Mobile Engineer",
       company: "farapi",
       period: "06/2026 — Present",
-      text: "Build and maintain full-stack mobile systems across the Flutter mobile app, responsive web platform, and backend services. Manage store releases through automated CI/CD pipelines, track down and fix production crashes quickly, and integrate AI coding tools under a Clean Architecture structure.",
+      text: "Architect and maintain full-stack mobile systems across the Flutter mobile app, responsive web dashboard, and backend services. Manage store releases to the App Store and Google Play through automated CI/CD pipelines, track down and fix production crashes quickly, and supervise clean architecture standards across all screens and API connections.",
     },
     {
-      role: "Full-Stack Mobile Engineer",
+      role: "Senior Flutter Engineer",
+      company: "Aklne",
+      period: "06/2024 — 02/2026",
+      text: "Led mobile engineering for a high-traffic food discovery platform merging short-form video feeds, recipes, and restaurant discovery. Scaled the product past 100k+ downloads at a 4.6 average rating across both stores. Engineered low-latency video caching for constrained networks, social authentication, and deep linking from in-video dishes directly to restaurant profiles and delivery maps.",
+    },
+    {
+      role: "Mobile Application Engineer",
       company: "Independent Consultant",
-      period: "06/2022 — 05/2026",
-      text: "Built and deployed custom mobile applications from early architecture to store release for startups and independent clients. Shipped Aklne (smart food app for recipes and restaurant discovery) and scaled it past 100k+ downloads at a 4.6★ rating, developed Seen (anonymous voice support with live audio calls), and built apps across healthcare (Sehatak), sports (FollowOn Sports), and enterprise events.",
+      period: "06/2022 — 05/2024",
+      text: "Delivered custom mobile solutions from concept to store release for regional startups and international clients. Built cross-platform Flutter applications with Supabase and resilient cloud backends, integrating offline caching, secure payment gateways, and automated store deployments. Key deliverables included the INSRC 2024 conference app for an Abu Dhabi client.",
     },
   ],
 
