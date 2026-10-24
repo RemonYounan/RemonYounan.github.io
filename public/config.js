@@ -14,7 +14,7 @@ window.SITE_CONFIG = {
   // PERSONAL INFO
   // ---------------------------------------------------------------------------
   name: "Remon Younan",
-  title: "Senior Full-Stack Mobile Engineer",
+  title: "Senior Mobile Engineer",
 
   // Hero SUB-HEADLINE (shown under the big H1). Two short sentences max.
   // Job: add NEW info the headline doesn't — who it's for + proof.
@@ -29,7 +29,7 @@ window.SITE_CONFIG = {
 
   // One short phrase for the "FOCUS" row of the About status panel.
   // Leave "" to fall back to your first listed strength.
-  focus: "Senior Full-Stack Mobile Engineer",
+  focus: "Senior Mobile Engineer",
 
   // ---------------------------------------------------------------------------
   // PITCH  —  "What you get" bullets on the About card. Keep each to one line.
@@ -195,16 +195,16 @@ window.SITE_CONFIG = {
   // ---------------------------------------------------------------------------
   experience: [
     {
-      role: "Senior Full-Stack Mobile Engineer",
+      role: "Senior Mobile Engineer",
       company: "farapi",
       period: "06/2026 — Present",
       text: "Architect and maintain full-stack mobile systems across the Flutter mobile app, responsive web dashboard, and backend services. Manage store releases to the App Store and Google Play through automated CI/CD pipelines, track down and fix production crashes quickly, and supervise clean architecture standards across all screens and API connections.",
     },
     {
-      role: "Senior Flutter Engineer",
+      role: "Mobile Engineer",
       company: "Aklne",
       period: "06/2024 — 02/2026",
-      text: "Led mobile engineering for a high-traffic food discovery platform merging short-form video feeds, recipes, and restaurant discovery. Scaled the product past 100k+ downloads at a 4.6 average rating across both stores. Engineered low-latency video caching for constrained networks, social authentication, and deep linking from in-video dishes directly to restaurant profiles and delivery maps.",
+      text: "Led mobile engineering for a high-traffic food discovery platform merging short-form video feeds, recipes, and restaurant discovery. Scaled the product past 100k+ downloads at a 4.6 average rating across both stores. Built video caching for slow networks, social authentication, and deep linking from in-video dishes directly to restaurant profiles and delivery maps.",
     },
     {
       role: "Mobile Application Engineer",
