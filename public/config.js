@@ -70,7 +70,7 @@ window.SITE_CONFIG = {
 
   // Short bio for the About section. Keep it direct and specific — recruiters
   // skip fluff. Two or three sentences is enough.
-  bio: "Senior Full-Stack Mobile Engineer with 4+ years of experience shipping production mobile systems across food tech, healthcare, sports, and anonymous voice support. I specialize in the hard problems: live voice calls, instant messaging, and offline-first architectures that stay resilient when connections drop. From system architecture to store release and CI/CD automation, I handle the full development lifecycle.",
+  bio: "Senior Mobile Engineer with 4+ years of experience shipping production mobile systems across food tech, healthcare, sports, and anonymous voice support. I specialize in the hard problems: live voice calls, instant messaging, and offline-first architectures that stay resilient when connections drop. From system architecture to store release and CI/CD automation, I handle the full development lifecycle.",
 
   // ---------------------------------------------------------------------------
   // LINKS  —  leave "" to hide
