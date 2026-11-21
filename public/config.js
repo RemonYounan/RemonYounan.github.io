@@ -198,7 +198,7 @@ window.SITE_CONFIG = {
       role: "Senior Mobile Engineer",
       company: "farapi",
       period: "06/2026 — Present",
-      text: "Architect and maintain full-stack mobile systems across the Flutter mobile app, responsive web dashboard, and backend services. Manage store releases to the App Store and Google Play through automated CI/CD pipelines, track down and fix production crashes quickly, and supervise clean architecture standards across all screens and API connections.",
+      text: "Build in-app payment flows in Flutter and contribute to the web admin dashboard and backend APIs that support the app. Ship iOS and Android updates to the App Store and Google Play through CI/CD. Run automated unit, widget, and integration tests before release. Use Crashlytics to trace production failures.",
     },
     {
       role: "Mobile Engineer",
@@ -208,9 +208,9 @@ window.SITE_CONFIG = {
     },
     {
       role: "Mobile Application Engineer",
-      company: "Independent Consultant",
+      company: "Independent Consultant (Upwork)",
       period: "06/2022 — 05/2026",
-      text: "Delivered custom mobile solutions from concept to store release for regional startups and international clients. Built cross-platform Flutter applications with Supabase and resilient cloud backends, integrating offline caching, secure payment gateways, and automated store deployments. Key deliverables included the INSRC 2024 conference app for an Abu Dhabi client.",
+      text: "Earned Upwork Top Rated status in 2024. Built and shipped Flutter apps for regional and international clients, including FollowOn Sports. Paired Flutter apps with Python backends and cloud datastores. Used Fastlane and GitHub Actions to automate builds and test distribution for the INSRC 2024 conference app.",
     },
   ],
 
