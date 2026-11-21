@@ -209,7 +209,7 @@ window.SITE_CONFIG = {
     {
       role: "Mobile Application Engineer",
       company: "Independent Consultant",
-      period: "06/2022 — 05/2024",
+      period: "06/2022 — 05/2026",
       text: "Delivered custom mobile solutions from concept to store release for regional startups and international clients. Built cross-platform Flutter applications with Supabase and resilient cloud backends, integrating offline caching, secure payment gateways, and automated store deployments. Key deliverables included the INSRC 2024 conference app for an Abu Dhabi client.",
     },
   ],
