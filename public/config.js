@@ -202,9 +202,9 @@ window.SITE_CONFIG = {
     },
     {
       role: "Mobile Engineer",
-      company: "Aklne",
+      company: "MB Group Corporation",
       period: "06/2024 — 02/2026",
-      text: "Led mobile engineering for a high-traffic food discovery platform merging short-form video feeds, recipes, and restaurant discovery. Scaled the product past 100k+ downloads at a 4.6 average rating across both stores. Built video caching for slow networks, social authentication, and deep linking from in-video dishes directly to restaurant profiles and delivery maps.",
+      text: "Led mobile engineering for Aklne, a food discovery app with 100K+ downloads on Google Play. Used Flutter DevTools to inspect memory and network activity in the reels feed. Pooled video controllers, cached videos on disk, and built deep links from dishes to restaurant profiles.",
     },
     {
       role: "Mobile Application Engineer",
@@ -345,7 +345,7 @@ window.SITE_CONFIG = {
       galleryFrame: false,
       mockup: "feed",
       github: "",
-      website: "https://aklne.com/",
+      website: "",
       playStore: "https://play.google.com/store/apps/details?id=com.aklne.app",
       appStore: "https://apps.apple.com/us/app/id6612032423",
       metrics: [
